@@ -1,0 +1,25 @@
+[flake8]
+inline-quotes = "
+max-complexity = 10
+max-line-length = 120
+import-order-style=pycharm
+ignore =
+    # Line break occurred before a binary operator
+    W503,
+exclude =
+    # Directories to be ignored
+    .github,
+    .git,
+    .idea,
+    .pytest_cache,
+    __pycache__,
+    # File types to be ignored
+    *.json,
+    *.md,
+    *.pyc,
+    *.sh,
+    *.toml,
+    *.txt,
+    # Files to ignore
+    .flake8,
+    .gitignore,
