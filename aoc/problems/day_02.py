@@ -25,7 +25,7 @@ class Aoc(AocBase):
 
     @property
     def test_solution_part_two(self) -> int:
-        raise NotImplementedError
+        return 900
 
     def part_one(self):
         x = 0
@@ -36,6 +36,7 @@ class Aoc(AocBase):
 
             # I don't think this is necessary,
             # But I wanted to give structural pattern matching a try
+            # https://www.python.org/dev/peps/pep-0636/
             match direction:
                 case "forward":
                     x += magnitude
@@ -51,7 +52,31 @@ class Aoc(AocBase):
         self.verify_solution(solution)
 
     def part_two(self):
-        self.verify_solution_part_two(None)
+        x = 0
+        y = 0
+        aim = 0
+
+        for command in self.input_data:
+            direction, magnitude = command.split(" ")
+            magnitude = int(magnitude.replace("\n", ""))
+
+            # I don't think this is necessary,
+            # But I wanted to give structural pattern matching a try
+            # https://www.python.org/dev/peps/pep-0636/
+            match direction:
+                case "forward":
+                    x += magnitude
+                    y += magnitude * aim
+                case "up":
+                    aim -= magnitude
+                case "down":
+                    # down "adds" depth
+                    aim += magnitude
+                case _:
+                    raise ValueError(f"An unexpected direction was found: {direction}")
+
+        solution = x*y
+        self.verify_solution_part_two(solution)
 
     def _run(self):
         self.part_one()
