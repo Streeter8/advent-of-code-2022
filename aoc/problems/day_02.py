@@ -10,14 +10,7 @@ class Aoc(AocBase):
 
     @property
     def test_input_data(self) -> Iterable:
-        return iter([
-            "forward 5\n",
-            "down 5\n",
-            "forward 8\n",
-            "up 3\n",
-            "down 8\n",
-            "forward 2\n",
-        ])
+        return iter(["forward 5\n", "down 5\n", "forward 8\n", "up 3\n", "down 8\n", "forward 2\n"])
 
     @property
     def test_solution(self) -> int:
@@ -48,7 +41,7 @@ class Aoc(AocBase):
                 case _:
                     raise ValueError(f"An unexpected direction was found: {direction}")
 
-        solution = x*y
+        solution = x * y
         self.verify_solution(solution)
 
     def part_two(self):
@@ -75,7 +68,7 @@ class Aoc(AocBase):
                 case _:
                     raise ValueError(f"An unexpected direction was found: {direction}")
 
-        solution = x*y
+        solution = x * y
         self.verify_solution_part_two(solution)
 
     def _run(self):
