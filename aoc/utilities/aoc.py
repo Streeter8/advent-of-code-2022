@@ -58,12 +58,16 @@ class AocBase:
     def verify_solution(self, solution):
         _solution = self.solution
         if _solution is not None:
-            assert solution == _solution
+            if solution != _solution:
+                raise AssertionError(f"{solution} != {_solution}")
             print(f"Part one solution verified: {solution}")
         else:
             print(f"Part one possible solution: {solution}")
 
-    def verify_solution_part_two(self, solution):
+    def verify_solution_part_two(self, solution=None):
+        if solution is None:
+            return
+
         _solution = self.solution_part_two
         if _solution is not None:
             assert solution == _solution
