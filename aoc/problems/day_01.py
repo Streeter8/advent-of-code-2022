@@ -26,9 +26,8 @@ class Aoc(AocBase):
         decrease = 0
 
         previous = None
-        data = self.input_data
-        for depth in data:
-            depth = int(depth.replace("\n", ""))
+        for depth in self.input_data_stripped():
+            depth = int(depth)
             if previous is None:
                 previous = depth
                 continue
@@ -56,8 +55,8 @@ class Aoc(AocBase):
         decrease = 0
 
         previous = []
-        for depth in self.input_data:
-            depth = int(depth.replace("\n", ""))
+        for depth in self.input_data_stripped():
+            depth = int(depth)
             if len(previous) < 3:
                 previous.append(depth)
                 continue

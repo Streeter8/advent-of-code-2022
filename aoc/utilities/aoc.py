@@ -47,6 +47,10 @@ class AocBase:
     def input_data(self) -> Iterable:
         return self.test_input_data if self.test else self._input_data
 
+    def input_data_stripped(self) -> Iterable:
+        for datum in self.input_data:
+            yield datum.replace("\n", "")
+
     @property
     def _input_data(self):
         input_file_path = pathlib.Path(__file__).parents[1] / "inputs" / f"day_{self.z_day}.txt"
