@@ -23,9 +23,9 @@ class Aoc(AocBase):
     def part_one(self):
         x = 0
         y = 0
-        for command in self.input_data:
+        for command in self.input_data_stripped():
             direction, magnitude = command.split(" ")
-            magnitude = int(magnitude.replace("\n", ""))
+            magnitude = int(magnitude)
 
             # I don't think this is necessary,
             # But I wanted to give structural pattern matching a try
@@ -49,9 +49,9 @@ class Aoc(AocBase):
         y = 0
         aim = 0
 
-        for command in self.input_data:
+        for command in self.input_data_stripped():
             direction, magnitude = command.split(" ")
-            magnitude = int(magnitude.replace("\n", ""))
+            magnitude = int(magnitude)
 
             # I don't think this is necessary,
             # But I wanted to give structural pattern matching a try
