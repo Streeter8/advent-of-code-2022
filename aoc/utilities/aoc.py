@@ -1,6 +1,6 @@
 import pathlib
 from timeit import timeit
-from typing import Iterable
+from typing import Callable, Iterable
 
 
 class AocBase:
@@ -50,6 +50,10 @@ class AocBase:
     def input_data_stripped(self) -> Iterable:
         for datum in self.input_data:
             yield datum.replace("\n", "")
+
+    def single_line_csv_input(self, input_type: Callable) -> Iterable:
+        for datum in ",".join(self.input_data_stripped()).split(","):
+            yield input_type(datum)
 
     @property
     def _input_data(self):

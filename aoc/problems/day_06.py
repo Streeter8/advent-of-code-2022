@@ -10,7 +10,7 @@ class Aoc(AocBase):
 
     @property
     def test_input_data(self) -> Iterable:
-        return ["3,4,3,1,2"]
+        return ["3,4,3,1,2\n"]
 
     @property
     def test_solution(self) -> int:
@@ -24,11 +24,9 @@ class Aoc(AocBase):
         return {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
 
     def problem(self):
-        initial_fish = ",".join(self.input_data_stripped())
-
         fishes = self.new_fish()
-        for fish in initial_fish.split(","):
-            fishes[int(fish)] += 1
+        for fish in self.single_line_csv_input(input_type=int):
+            fishes[fish] += 1
 
         for _day in range(256):
             new_fish = self.new_fish()
@@ -43,7 +41,7 @@ class Aoc(AocBase):
             new_fish[0] = fishes[1]
             fishes = new_fish
 
-            if _day == 80:
+            if _day == 79:
                 self.verify_solution(sum(fishes.values()))
 
         self.verify_solution_part_two(sum(fishes.values()))
