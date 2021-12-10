@@ -1,5 +1,5 @@
 black
-flake8==3.*
+flake8==4.*
 flake8-import-order==0.*
 flake8-quotes==3.*
 pep8-naming==0.*
