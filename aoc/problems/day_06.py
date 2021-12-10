@@ -23,7 +23,7 @@ class Aoc(AocBase):
     def new_fish(self) -> dict:
         return {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
 
-    def problem(self):
+    def solve(self):
         fishes = self.new_fish()
         for fish in self.single_line_csv_input(input_type=int):
             fishes[fish] += 1
@@ -47,4 +47,4 @@ class Aoc(AocBase):
         self.verify_solution_part_two(sum(fishes.values()))
 
     def _run(self):
-        self.problem()
+        self.solve()

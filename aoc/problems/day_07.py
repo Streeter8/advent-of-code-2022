@@ -20,7 +20,7 @@ class Aoc(AocBase):
     def test_solution_part_two(self):
         return 168
 
-    def problem(self):
+    def solve(self):
         crabs = list(self.single_line_csv_input(input_type=int))
 
         best_position_simple = 0
@@ -52,4 +52,4 @@ class Aoc(AocBase):
         self.verify_solution_part_two(best_fuel_complex)
 
     def _run(self):
-        self.problem()
+        self.solve()
