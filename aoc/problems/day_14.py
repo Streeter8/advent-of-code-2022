@@ -39,30 +39,47 @@ class Aoc(AocBase):
     def test_solution_part_two(self) -> int:
         return 2188189693529
 
-    def step(self, polymer: str, insertion_rules: dict[str, str]) -> str:
-        insertions = []
-        for index in range(len(polymer) - 1):
-            insertions.append(insertion_rules[polymer[index:index + 2]])
+    def insert(self, polymer: dict[str, int], pair: str, count: int):
+        if pair in polymer:
+            polymer[pair] += count
+        else:
+            polymer[pair] = count
 
-        new_polymer = polymer[0]
-        for index in range(len(insertions)):
-            new_polymer = f"{new_polymer}{insertions[index]}{polymer[index + 1]}"
+    def step(self, polymer: dict[str, int], insertion_rules: dict[str, str]) -> dict[str, int]:
+        new_polymer = {}
+        for pair, pair_count in polymer.items():
+            character = insertion_rules[pair]
+            left_pair = f"{pair[0]}{character}"
+            right_pair = f"{character}{pair[1]}"
+
+            self.insert(new_polymer, left_pair, pair_count)
+            self.insert(new_polymer, right_pair, pair_count)
 
         return new_polymer
 
-    def analyze_polymer(self, polymer: str) -> dict[str, int]:
+    def analyze_polymer(self, polymer: dict[str, int], start_character: str, end_character: str) -> dict[str, int]:
         frequencies = {}
-        for character in polymer:
-            if character in frequencies:
-                frequencies[character] += 1
-            else:
-                frequencies[character] = 1
+        for pair, count in polymer.items():
+            for character in pair:
+                self.insert(frequencies, character, count)
 
-        return frequencies
+        # All characters are double counted except for the first and last character
+        frequencies[start_character] += 1
+        frequencies[end_character] += 1
+
+        return {character: int(value / 2) for character, value in frequencies.items()}
 
     def solve(self):
         input_data = self.input_data_stripped()
-        polymer = next(input_data)
+        polymer_chain = next(input_data)
+        start_character = polymer_chain[0]
+        end_character = polymer_chain[-1]
+        polymer = {}
+        for index in range(len(polymer_chain) - 1):
+            pair = polymer_chain[index:index + 2]
+            self.insert(polymer, pair, 1)
+
+        # Skip blank line
         next(input_data)
 
         insertion_rules = {}
@@ -71,20 +88,18 @@ class Aoc(AocBase):
             insertion_rules[pair] = insert_character
 
         for _ in range(10):
-            print(self.analyze_polymer(polymer))
             polymer = self.step(polymer, insertion_rules)
 
-        results = self.analyze_polymer(polymer)
+        results = self.analyze_polymer(polymer, start_character, end_character)
         result = max(results.values()) - min(results.values())
         self.verify_solution(result)
 
-        # for _ in range(30):
-        #     print(self.analyze_polymer(polymer))
-        #     polymer = self.step(polymer, insertion_rules)
-        #
-        # results = self.analyze_polymer(polymer)
-        # result = max(results.values()) - min(results.values())
-        # self.verify_solution_part_two(result)
+        for _ in range(30):
+            polymer = self.step(polymer, insertion_rules)
+
+        results = self.analyze_polymer(polymer, start_character, end_character)
+        result = max(results.values()) - min(results.values())
+        self.verify_solution_part_two(result)
 
     def _run(self):
         self.solve()
