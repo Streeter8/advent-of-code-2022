@@ -106,9 +106,5 @@ class Aoc(AocBase):
 
         self.verify_solution(risk_level)
 
-    def part_two(self):
-        self.verify_solution_part_two(None)
-
     def _run(self):
         self.solve()
-        self.part_two()
