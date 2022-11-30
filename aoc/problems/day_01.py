@@ -10,75 +10,21 @@ class Aoc(AocBase):
 
     @property
     def test_input_data(self) -> Iterable:
-        return iter(f"{x}\n" for x in [199, 200, 208, 210, 200, 207, 240, 269, 260, 263])
+        raise NotImplementedError
 
     @property
-    def test_solution(self) -> int:
-        return 7
+    def test_solution(self):
+        raise NotImplementedError
 
     @property
-    def test_solution_part_two(self) -> int:
-        return 5
+    def test_solution_part_two(self):
+        raise NotImplementedError
 
     def part_one(self):
-        increase = 0
-        no_change = 0
-        decrease = 0
-
-        previous = None
-        for depth in self.input_data_stripped():
-            depth = int(depth)
-            if previous is None:
-                previous = depth
-                continue
-
-            if depth > previous:
-                increase += 1
-            elif depth == previous:
-                no_change += 1
-            else:
-                decrease += 1
-
-            previous = depth
-
-        print("=== Part One solution ===")
-        print(f"Increases: {increase}")
-        print(f"no_change: {no_change}")
-        print(f"decrease: {decrease}")
-        print("=========================")
-
-        self.verify_solution(increase)
+        self.verify_solution(None)
 
     def part_two(self):
-        increase = 0
-        no_change = 0
-        decrease = 0
-
-        previous = []
-        for depth in self.input_data_stripped():
-            depth = int(depth)
-            if len(previous) < 3:
-                previous.append(depth)
-                continue
-
-            current = previous[1] + previous[2] + depth
-            sum_previous = sum(previous)
-            if current > sum_previous:
-                increase += 1
-            elif current == sum_previous:
-                no_change += 1
-            else:
-                decrease += 1
-
-            previous = [previous[1], previous[2], depth]
-
-        print("=== Part Two solution ===")
-        print(f"Increases: {increase}")
-        print(f"no_change: {no_change}")
-        print(f"decrease: {decrease}")
-        print("=========================")
-
-        self.verify_solution_part_two(increase)
+        self.verify_solution_part_two(None)
 
     def _run(self):
         self.part_one()

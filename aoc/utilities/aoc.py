@@ -4,7 +4,7 @@ from typing import Callable, Iterable
 
 
 class AocBase:
-    def __init__(self, test: bool = False):
+    def __init__(self, test: bool = False) -> "AocBase":
         self.test = test
 
     @property
