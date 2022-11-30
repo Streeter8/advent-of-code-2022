@@ -1,15 +1,15 @@
-# Advent of Code 2021
+# Advent of Code 2022
 
 This project will house my approaches to the
-[2021 Advent of Code Challenges](https://adventofcode.com/2021).
+[2022 Advent of Code Challenges](https://adventofcode.com/2022).
 
 ## Managing Python
 
 ### Version
 
 I used pyenv to manage my Python version locally.
-This code was written and executed in Python 3.10.0,
-as this was the Python latest version available on pyenv 2.2.2.
+This code was written and executed in Python 3.11.0,
+as this was the Python latest version available on pyenv 2.3.6.
 
 ### Install requirements
 
@@ -23,7 +23,7 @@ pip install --upgrade -r requirements.txt
 
 ```shell
 # Format Python code
-black --config pyproject.toml .
+isort . & black .
 # Run the Python linter
 flake8
 ```
