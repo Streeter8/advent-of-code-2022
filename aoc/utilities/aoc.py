@@ -85,7 +85,12 @@ class AocBase:
             print(f"Part two possible solution: {solution}")
 
     def run(self):
-        print(f"Problem {self.day} took {timeit(self._run, number=1)} seconds to execute")
+        execution_time = timeit(self._run, number=1)
+        if execution_time < 1:
+            milliseconds = execution_time * 1000
+            print(f"Problem {self.day} took {round(milliseconds, 2)}ms to execute")
+        else:
+            print(f"Problem {self.day} took {round(execution_time, 3)} seconds to execute")
 
     def _run(self):
         raise NotImplementedError
