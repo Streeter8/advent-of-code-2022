@@ -2,7 +2,7 @@
 
 ## What problem is this solving?
 
-- [2021, Day x](https://adventofcode.com/2021/day/1)
+- [2022, Day x](https://adventofcode.com/2022/day/1)
 
 ## Any background context you want to provide?
 
