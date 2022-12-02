@@ -20,52 +20,41 @@ class Aoc(AocBase):
     def test_solution_part_two(self):
         return 12
 
-    def part_one(self):
+    @property
+    def _solution(self):
+        return 13675
+
+    @property
+    def _solution_part_two(self):
+        return 14184
+
+    def solve(self):
         # A, X: Rock
         # B, Y: Paper
         # C, Z: Scissors
-        games = {
-            "A X": 3 + 1,
-            "A Y": 6 + 2,
-            "A Z": 0 + 3,
-            "B X": 0 + 1,
-            "B Y": 3 + 2,
-            "B Z": 6 + 3,
-            "C X": 6 + 1,
-            "C Y": 0 + 2,
-            "C Z": 3 + 3,
+        # (Game 1 Score, Game 2 Score)
+        game = {
+            "A X": (3 + 1, 0 + 3),
+            "A Y": (6 + 2, 3 + 1),
+            "A Z": (0 + 3, 6 + 2),
+            "B X": (0 + 1, 0 + 1),
+            "B Y": (3 + 2, 3 + 2),
+            "B Z": (6 + 3, 6 + 3),
+            "C X": (6 + 1, 0 + 2),
+            "C Y": (0 + 2, 3 + 3),
+            "C Z": (3 + 3, 6 + 1),
+            "": (0, 0),
         }
 
-        score = 0
+        score_one = 0
+        score_two = 0
         for line in self.input_data_stripped():
-            if line:
-                score += games[line]
+            one, two = game[line]
+            score_one += one
+            score_two += two
 
-        self.verify_solution(score)
-
-    def part_two(self):
-        # A, X: Rock
-        # B, Y: Paper
-        # C, Z: Scissors
-        games = {
-            "A X": 0 + 3,
-            "A Y": 3 + 1,
-            "A Z": 6 + 2,
-            "B X": 0 + 1,
-            "B Y": 3 + 2,
-            "B Z": 6 + 3,
-            "C X": 0 + 2,
-            "C Y": 3 + 3,
-            "C Z": 6 + 1,
-        }
-
-        score = 0
-        for line in self.input_data_stripped():
-            if line:
-                score += games[line]
-
-        self.verify_solution_part_two(score)
+        self.verify_solution(score_one)
+        self.verify_solution_part_two(score_two)
 
     def _run(self):
-        self.part_one()
-        self.part_two()
+        self.solve()
