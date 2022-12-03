@@ -85,7 +85,8 @@ class AocBase:
             print(f"Part two possible solution: {solution}")
 
     def run(self):
-        execution_time = timeit(self._run, number=1)
+        number = 1
+        execution_time = timeit(self._run, number=number) / number
         if execution_time < 1:
             milliseconds = execution_time * 1000
             print(f"Problem {self.day} took {round(milliseconds, 2)}ms to execute")
