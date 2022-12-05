@@ -38,7 +38,7 @@ class Aoc(AocBase):
     def _solution_part_two(self):
         return None
 
-    def solve(self):
+    def solve(self):  # noqa: C901 'Aoc.solve' is too complex (11)
         crates = []
         for line in self.input_data_stripped():
             if not line:
