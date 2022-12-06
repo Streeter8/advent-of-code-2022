@@ -49,7 +49,7 @@ class AocBase:
 
     def input_data_stripped(self) -> Iterable:
         for datum in self.input_data:
-            yield datum.replace("\n", "")
+            yield datum.rstrip()
 
     def single_line_csv_input(self, input_type: Callable) -> Iterable:
         for datum in ",".join(self.input_data_stripped()).split(","):
