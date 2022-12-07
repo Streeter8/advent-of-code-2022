@@ -36,7 +36,7 @@ class Aoc(AocBase):
 
     @property
     def _solution_part_two(self):
-        return None
+        return "PGSQBFLDP"
 
     def solve(self):  # noqa: C901 'Aoc.solve' is too complex (11)
         crates = []

@@ -34,6 +34,14 @@ class Aoc(AocBase):
     def test_solution_part_two(self):
         return {1: 19, 2: 23, 3: 23, 4: 29, 5: 26}[self.case]
 
+    @property
+    def _solution(self):
+        return 1623
+
+    @property
+    def _solution_part_two(self):
+        return 3774
+
     def solve(self):
         datastream = next(self.input_data)
 
