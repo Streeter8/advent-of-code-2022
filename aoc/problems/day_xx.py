@@ -20,6 +20,14 @@ class Aoc(AocBase):
     def test_solution_part_two(self):
         raise NotImplementedError
 
+    @property
+    def _solution(self):
+        return None
+
+    @property
+    def _solution_part_two(self):
+        return None
+
     def part_one(self):
         self.verify_solution(None)
 
