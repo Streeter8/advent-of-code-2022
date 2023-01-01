@@ -158,10 +158,7 @@ class Aoc(AocBase):
         self.verify_solution(monkeys.root)
 
     def part_two(self):
-        monkeys = MonkeysTwo(
-            Monkeys.from_lines(self.input_data_stripped()),
-            diff_multiplier=1 if self.test else 50
-        )
+        monkeys = MonkeysTwo(Monkeys.from_lines(self.input_data_stripped()), diff_multiplier=1 if self.test else 50)
         value = monkeys.find_humn()
 
         self.verify_solution_part_two(value)
