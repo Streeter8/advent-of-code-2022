@@ -20,12 +20,23 @@ def main():
         default=False,
     )
 
+    parser.add_argument(
+        "--year",
+        type=int,
+        help="The problem year",
+        default=None,
+    )
+
     args = parser.parse_args()
 
     day = str(args.day).zfill(2)
+    if year := args.year:
+        module = f"aoc.{year}.problems.day_{day}"
+    else:
+        module = f"aoc.problems.day_{day}"
 
-    aoc = importlib.import_module(f"aoc.problems.day_{day}")
-    _aoc: AocBase = aoc.Aoc(args.test)
+    aoc = importlib.import_module(module)
+    _aoc: AocBase = aoc.Aoc(args.test, year)
     _aoc.run()
 
 

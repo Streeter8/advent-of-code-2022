@@ -1,11 +1,13 @@
 import pathlib
 from collections.abc import Callable, Iterable
 from timeit import timeit
+from typing import Optional
 
 
 class AocBase:
-    def __init__(self, test: bool = False):
+    def __init__(self, test: bool = False, year: Optional[int] = None):
         self.test = test
+        self.year = year
 
     @property
     def day(self) -> int:
@@ -56,10 +58,15 @@ class AocBase:
             yield input_type(datum)
 
     @property
-    def _input_data(self):
-        input_file_path = pathlib.Path(__file__).parents[1] / "inputs" / f"day_{self.z_day}.txt"
+    def input_file_path(self) -> pathlib.Path:
+        if self.year:
+            return pathlib.Path(__file__).parents[1] / str(self.year) / "inputs" / f"day_{self.z_day}.txt"
+        else:
+            return pathlib.Path(__file__).parents[1] / "inputs" / f"day_{self.z_day}.txt"
 
-        with open(input_file_path) as input_file:
+    @property
+    def _input_data(self):
+        with open(self.input_file_path) as input_file:
             for input_line in input_file:
                 yield input_line
 
