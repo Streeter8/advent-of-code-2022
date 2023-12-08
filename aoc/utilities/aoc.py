@@ -1,10 +1,10 @@
 import pathlib
+from collections.abc import Callable, Iterable
 from timeit import timeit
-from typing import Callable, Iterable
 
 
 class AocBase:
-    def __init__(self, test: bool = False) -> "AocBase":
+    def __init__(self, test: bool = False):
         self.test = test
 
     @property
