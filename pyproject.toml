@@ -9,8 +9,7 @@ include_trailing_comma = true
 line_length = 120
 multi_line_output = 3
 no_lines_before = "LOCALFOLDER"
-# Python 3.11 not currently supported as of isort==5.10.1
-py_version = 310
+py_version = 311
 remove_redundant_aliases = true
 supported_extensions = ["py"]
 src_paths = ["aoc"]
