@@ -3,6 +3,7 @@ from typing import Self
 
 from aoc.utilities.aoc import AocBase
 
+
 class Aoc(AocBase):
     @property
     def day(self) -> int:
@@ -59,8 +60,10 @@ class Aoc(AocBase):
         x_mas_count = sum(a_letter.is_x_mas(LETTERS) for a_letter in A_LETTERS)
         self.verify_solution_part_two(x_mas_count)
 
+
 def add(tuple_one: tuple[int, int], tuple_two: tuple[int, int]) -> tuple[int, int]:
     return tuple_one[0] + tuple_two[0], tuple_one[1] + tuple_two[1]
+
 
 class Letter:
     def __init__(self, letter: str, x: int, y: int):
@@ -113,7 +116,7 @@ class Letter:
 
         return next_letter.is_xmas(letters, direction)
 
-    def is_x_mas(self, letters: dict[tuple[int, int], Self], count = {"c": 0}) -> bool:
+    def is_x_mas(self, letters: dict[tuple[int, int], Self]) -> bool:
         northwest_letter = letters.get((self.x - 1, self.y + 1))
         if not northwest_letter or (northwest_letter.letter != "M" and northwest_letter.letter != "S"):
             return False

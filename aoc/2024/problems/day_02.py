@@ -48,7 +48,7 @@ class Aoc(AocBase):
 class Report:
     def __init__(self, report: str | list[int]):
         if isinstance(report, str):
-            self.levels =  list(map(int, report.strip().split(" ")))
+            self.levels = list(map(int, report.strip().split(" ")))
         else:
             self.levels = report
 

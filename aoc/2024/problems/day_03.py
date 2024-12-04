@@ -11,9 +11,7 @@ class Aoc(AocBase):
 
     @property
     def test_input_data(self) -> Iterable:
-        return (
-            "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))",
-        )
+        return ("xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))",)
 
     @property
     def test_solution(self) -> int:
