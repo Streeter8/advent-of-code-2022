@@ -1,3 +1,4 @@
 .idea
 *.pyc
 aoc/inputs/*.txt
+aoc/*/inputs/*.txt
