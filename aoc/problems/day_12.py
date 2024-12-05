@@ -100,7 +100,7 @@ class Mountain:
 
         x_max = len(heightmap[0]) - 1
         y_max = len(heightmap) - 1
-        max_cost = (x_max + 1) * (y_max + 1) + 1
+        max_cost = (x_max + 1) * (y_max + 1) + 1  # noqa: F841
 
         self.deadends = set()
         self.path = set()

@@ -241,8 +241,8 @@ class RockTower:
             (6, height - max(y for x, y in self.grid if x == 6)),
         )
 
-    def simulate(self) -> int:
-        now = datetime.now()
+    def simulate(self) -> int:  # noqa: C901
+        now = datetime.now()  # noqa: F841
         wind_count = 0
 
         rock_patterns = set()
@@ -295,7 +295,7 @@ class RockTower:
 
         remaining_steps = (self.rocks - offset) % repeating_rocks
         print(remaining_steps)
-        for step in range(remaining_steps):
+        for step in range(remaining_steps):  # noqa: B007
             self.add_rock(rock)
             self.rock.blow(self.winds[wind_count % self.wind_count], self.grid)
             wind_count += 1
