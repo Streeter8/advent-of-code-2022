@@ -1,6 +1,5 @@
-from typing import Iterable
-
 import math
+from typing import Iterable
 
 from aoc.utilities.aoc import AocBase
 
