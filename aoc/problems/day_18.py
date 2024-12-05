@@ -79,7 +79,7 @@ class Component:
 
 
 class Shape:
-    def __init__(self, lines: Iterable[str]):
+    def __init__(self, lines: Iterable[str]):  # noqa: C901
         _coordinates = set(tuple(int(_) for _ in line.split(",")) for line in lines)
         self.coordinates = {_: Component(*_) for _ in _coordinates}
 

@@ -33,7 +33,7 @@ class Aoc(AocBase):
         raise NotImplementedError
 
     def part_one(self):
-        castle = Castle(self.input_data_stripped())
+        castle = Castle(self.input_data_stripped())  # noqa: F841
         self.verify_solution(None)
 
     def part_two(self):

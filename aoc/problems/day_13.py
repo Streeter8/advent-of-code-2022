@@ -4,7 +4,7 @@ from typing import Iterable, Optional, Union
 from aoc.utilities.aoc import AocBase
 
 
-def evaluate(left: Union[list, int], right: Union[list, int]) -> Optional[bool]:
+def evaluate(left: Union[list, int], right: Union[list, int]) -> Optional[bool]:  # noqa: C901
     if isinstance(left, int) and isinstance(right, int):
         if left < right:
             return True

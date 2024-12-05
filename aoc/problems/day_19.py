@@ -34,7 +34,7 @@ class Simulator:
         self.geode_robots = 0
 
     def simulate(self, minutes: int = 24) -> int:
-        for minute in range(minutes):
+        for minute in range(minutes):  # noqa: B007
             self.spend()
 
             self.ore += self.ore_robots

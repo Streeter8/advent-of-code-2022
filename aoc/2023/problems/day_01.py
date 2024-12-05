@@ -55,7 +55,7 @@ class Aoc(AocBase):
 
         self.verify_solution(sum(calibration_values))
 
-    def part_two(self):
+    def part_two(self):  # noqa: C901
         numbers = {
             "one": "1",
             "two": "2",

@@ -41,23 +41,23 @@ class Aoc(AocBase):
         return 1985
 
     def _run(self):
-        X_LETTERS = []
-        A_LETTERS = []
-        LETTERS = {}
+        x_letters = []
+        a_letters = []
+        letters = {}
 
         for y, row in enumerate(self.input_data_stripped()):
             for x, character in enumerate(row):
                 letter = Letter(character, x, y)
-                LETTERS[letter.coordinates] = letter
+                letters[letter.coordinates] = letter
                 if "X" == character:
-                    X_LETTERS.append(letter)
+                    x_letters.append(letter)
                 if "A" == character:
-                    A_LETTERS.append(letter)
+                    a_letters.append(letter)
 
-        xmas_count = sum(x_letter.xmas_count(LETTERS) for x_letter in X_LETTERS)
+        xmas_count = sum(x_letter.xmas_count(letters) for x_letter in x_letters)
         self.verify_solution(xmas_count)
 
-        x_mas_count = sum(a_letter.is_x_mas(LETTERS) for a_letter in A_LETTERS)
+        x_mas_count = sum(a_letter.is_x_mas(letters) for a_letter in a_letters)
         self.verify_solution_part_two(x_mas_count)
 
 
