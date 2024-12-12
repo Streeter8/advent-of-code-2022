@@ -1,15 +1,7 @@
 from collections.abc import Iterable
-from datetime import datetime
-from functools import lru_cache
-from zoneinfo import ZoneInfo
+from typing import Self
 
 from aoc.utilities.aoc import AocBase
-
-CENTRAL = ZoneInfo("US/Central")
-
-
-def now() -> str:
-    return datetime.now(CENTRAL).isoformat()
 
 
 class Aoc(AocBase):
@@ -31,56 +23,65 @@ class Aoc(AocBase):
 
     @property
     def test_solution_part_two(self):
-        raise NotImplementedError
+        return 65601038650482
 
     @property
     def _solution(self) -> int:
         return 235850
 
     @property
-    def _solution_part_two(self):
-        return None
+    def _solution_part_two(self) -> int:
+        return 279903140844645
 
     def part_one(self):
-        arrangement = StoneArrangement(self.input_data)
-        arrangement.blinks(25)
-        self.verify_solution(len(arrangement.stones))
+        stones = [Stone(stone) for stone in self.input_data]
+        number_of_stones = sum(stone.stones_after_steps(25) for stone in stones)
+        self.verify_solution(number_of_stones)
 
     def part_two(self):
-        arrangement = StoneArrangement(self.input_data)
-        arrangement.blinks(75)
-        self.verify_solution_part_two(len(arrangement.stones))
+        stones = [Stone(stone) for stone in self.input_data]
+        number_of_stones = sum(stone.stones_after_steps(75) for stone in stones)
+        self.verify_solution_part_two(number_of_stones)
 
     def _run(self):
         self.part_one()
         self.part_two()
 
 
-class StoneArrangement:
-    def __init__(self, stones: list[int]):
-        self.stones = stones
+STEP_CACHE = {0: {1: 1}}
 
-    def blink(self):
-        new_stones = []
-        for stone in self.stones:
-            new_stones.extend(self.get_new_stones(stone))
 
-        self.stones = new_stones
+class Stone:
+    def __init__(self, stone: int):
+        self.stone = stone
 
-    @lru_cache(None)
-    def get_new_stones(self, stone: int) -> list[int]:
-        if 0 == stone:
-            return [1]
+    def stones_after_steps(self, steps: int) -> int:
+        if result := STEP_CACHE.get(self.stone, {}).get(steps):
+            return result
 
-        sstone = str(stone)
+        if 0 == steps:
+            return 1
+
+        stones = self.get_stones()
+        if 1 == steps:
+            return len(stones)
+
+        result = sum(stone.stones_after_steps(steps - 1) for stone in stones)
+        if self.stone not in STEP_CACHE:
+            STEP_CACHE[self.stone] = {steps: result}
+        else:
+            STEP_CACHE[self.stone][steps] = result
+
+        return result
+
+    def get_stones(self) -> list[Self]:
+        if 0 == self.stone:
+            return [Stone(1)]
+
+        sstone = str(self.stone)
         len_sstone = len(sstone)
         if 0 == len_sstone % 2:
             half_len = len_sstone // 2
-            return [int(sstone[:half_len]), int(sstone[half_len:])]
+            return [Stone(int(sstone[:half_len])), Stone(int(sstone[half_len:]))]
 
-        return [stone * 2024]
-
-    def blinks(self, times: int):
-        for times_blinked in range(1, times + 1):
-            self.blink()
-            print(f"{now()}: {times_blinked} | Stone Count: {len(self.stones)}")
+        return [Stone(self.stone * 2024)]
