@@ -30,27 +30,21 @@ class Aoc(AocBase):
         return 1930
 
     @property
-    def test_solution_part_two(self):
-        raise NotImplementedError
+    def test_solution_part_two(self) -> int:
+        return 1206
 
     @property
     def _solution(self) -> int:
         return 1375574
 
     @property
-    def _solution_part_two(self):
-        return None
-
-    def part_one(self):
-        land_map = Map.from_input(self.input_data_stripped())
-        self.verify_solution(land_map.fencing_cost)
-
-    def part_two(self):
-        self.verify_solution_part_two(None)
+    def _solution_part_two(self) -> int:
+        return 830566
 
     def _run(self):
-        self.part_one()
-        self.part_two()
+        land_map = Map.from_input(self.input_data_stripped())
+        self.verify_solution(land_map.fencing_cost)
+        self.verify_solution_part_two(land_map.bulk_fencing_cost)
 
 
 def add(tuple_one: tuple[int, int], tuple_two: tuple[int, int]) -> tuple[int, int]:
@@ -60,13 +54,18 @@ def add(tuple_one: tuple[int, int], tuple_two: tuple[int, int]) -> tuple[int, in
 def sub(tuple_one: tuple[int, int], tuple_two: tuple[int, int]) -> tuple[int, int]:
     return tuple_one[0] - tuple_two[0], tuple_one[1] - tuple_two[1]
 
+NORTH = (0, 1)
+EAST = (1, 0)
+SOUTH = (0, -1)
+WEST = (-1, 0)
 
-TURNS = (
-    (0, 1),  # North
-    (1, 0),  # East
-    (0, -1),  # South
-    (-1, 0),  # West
-)
+TURNS = (NORTH, EAST, SOUTH, WEST)
+PERPENDICULAR_TURNS = {
+    NORTH: [EAST, WEST],
+    EAST: [NORTH, SOUTH],
+    SOUTH: [EAST, WEST],
+    WEST: [NORTH, SOUTH],
+}
 
 
 def adjacent_coordinates(coordinates: tuple[int, int]) -> list[tuple[int, int]]:
@@ -77,10 +76,19 @@ class Region:
     def __init__(self, initial_coordinates: set[tuple[int, int]], character: str):
         self.coordinates = initial_coordinates
         self.character = character
+        self.sides = {turn: [] for turn in TURNS}
 
     @property
     def fencing_cost(self) -> int:
         return self.perimeter * self.area
+
+    @property
+    def bulk_fencing_cost(self) -> int:
+        # print(
+        #     f"A region of {self.character} plants with price "
+        #     f"{self.area} * {self.number_of_sides} = {self.number_of_sides * self.area}."
+        # )
+        return self.number_of_sides * self.area
 
     @property
     def perimeter(self) -> int:
@@ -91,6 +99,47 @@ class Region:
                     perimeter += 1
 
         return perimeter
+
+    @property
+    def number_of_sides(self) -> int:
+        all_sides = {turn: [] for turn in TURNS}
+        for coordinates in self.coordinates:
+            for turn in TURNS:
+                if any(coordinates in side for side in all_sides[turn]):
+                    continue
+
+                _adjacent_coordinates = add(coordinates, turn)
+                if _adjacent_coordinates not in self.coordinates:
+                    added = False
+                    for sides in all_sides[turn]:
+                        for pturn in PERPENDICULAR_TURNS:
+                            if add(coordinates, pturn) in sides:
+                                sides.add(coordinates)
+                                added = True
+
+                    if not added:
+                        all_sides[turn].append({coordinates})
+
+        combined_sides = {}
+        for coordinates, sides in all_sides.items():
+            if len(sides) > 1:
+                combined_sides[coordinates] = self.combine_sides(sides)
+            else:
+                combined_sides[coordinates] = sides
+
+        return sum(len(sides) for sides in combined_sides.values())
+
+    def combine_sides(self, all_sides: list[set[tuple[int, int]]]) -> list[set[tuple[int, int]]]:
+        for side_one, side_two in product(all_sides, repeat=2):
+            if side_one is side_two:
+                continue
+
+            if side_one.intersection(side_two):
+                new_sides = [side for side in all_sides if side is not side_one and side is not side_two]
+                new_sides.append(side_one.union(side_two))
+                return self.combine_sides(new_sides)
+
+        return all_sides
 
     @property
     def area(self) -> int:
@@ -165,6 +214,10 @@ class Map:
     @property
     def fencing_cost(self) -> int:
         return sum(sum(region.fencing_cost for region in regions) for regions in self.regions.values())
+
+    @property
+    def bulk_fencing_cost(self) -> int:
+        return sum(sum(region.bulk_fencing_cost for region in regions) for regions in self.regions.values())
 
     def assess_regions(self) -> None:
         regions = {}
